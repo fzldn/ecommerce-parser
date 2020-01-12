@@ -15,6 +15,52 @@ composer install
 php artisan key:generate
 ```
 
+### Email Configuration
+
+Open `.env` file with your favorite editor, and edit these lines
+
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=admin@example.org
+MAIL_FROM_NAME="${APP_NAME}"
+
+MAILGUN_DOMAIN=
+MAILGUN_SECRET=
+```
+
+mailgun driver example
+
+```
+MAIL_DRIVER=mailgun
+...
+MAILGUN_DOMAIN=your-mailgun-domain
+MAILGUN_SECRET=your-mailgun-key
+```
+
+smtp driver with [mailcatcher](https://mailcatcher.me) example
+
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+```
+
+or you can to use your own smtp configuration
+
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=465
+MAIL_USERNAME=your-smtp-username
+MAIL_PASSWORD=your-smtp-password
+MAIL_ENCRYPTION=tls
+```
+
 ## Parsing Input
 
 Run command help for detail
@@ -33,6 +79,12 @@ php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challe
 
 ```
 php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --format=jsonl
+```
+
+### Parsing Example with send to email the output data
+
+```
+php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --email=someone@example.org
 ```
 
 ## Coding Standard

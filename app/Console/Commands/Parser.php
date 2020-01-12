@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\InputParsed;
 use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
 
 class Parser extends Command
 {
@@ -16,7 +18,8 @@ class Parser extends Command
      */
     protected $signature = 'parser:run
         {url : url of the remote jsonl file}
-        {--f|format=csv : output format csv or jsonl}';
+        {--f|format=csv : output format csv or jsonl}
+        {--e|email= : send output file to your email}';
 
     /**
      * The console command description.
@@ -44,6 +47,7 @@ class Parser extends Command
     {
         $url = $this->argument('url');
         $format = $this->option('format');
+        $email = $this->option('email');
         $validFormats = ['csv', 'jsonl'];
         if (!in_array($format, $validFormats)) {
             $this->error(sprintf("Invalid format %s, only valid format is %s", $format, implode(',', $validFormats)));
@@ -52,6 +56,11 @@ class Parser extends Command
         $chunkSize = 1024 * 1024; // 1Mb
         if ($downloadedFilePath = $this->downloadChunked($url, $chunkSize)) {
             $outputFilePath = $this->process($downloadedFilePath, $format);
+            if ($email) {
+                $this->line(sprintf("Sending output data to %s", $email));
+                Mail::to($email)->send(new InputParsed($outputFilePath));
+                $this->info("Email sent!");
+            }
         };
     }
 
@@ -156,7 +165,7 @@ class Parser extends Command
      *
      * @param string $inputPath Downloaded jsonl file input
      * @param string $format Output file format
-     * @return void
+     * @return string
      */
     public function process(string $inputPath, string $format)
     {
