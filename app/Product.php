@@ -12,6 +12,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'title',
         'subtitle',
         'image',
@@ -20,6 +21,7 @@ class Product extends Model
         'upc',
         'gtin14',
         'price',
+        'created_at',
     ];
 
     /**
