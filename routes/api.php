@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Customer
+Route::get('/customers', 'CustomerController@index');
+Route::get('/customers/{customer}', 'CustomerController@show');
+
+// Brand
+Route::get('/brands', 'BrandController@index');
+Route::get('/brands/{brand}', 'BrandController@show');
+
+// Category
+Route::get('/categories', 'CategoryController@index');
+Route::get('/categories/{category}', 'CategoryController@show');
+
+// Product
+Route::get('/products', 'ProductController@index');
+Route::get('/products/brands/{brand}', 'ProductController@indexByBrand');
+Route::get('/products/categories/{category}', 'ProductController@indexByCategory');
+Route::get('/products/{product}', 'ProductController@show');
+
+// Order
+Route::get('/orders', 'OrderController@index');
+Route::get('/orders/{order}', 'OrderController@show');

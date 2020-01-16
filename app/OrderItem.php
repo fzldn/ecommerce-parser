@@ -17,6 +17,15 @@ class OrderItem extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'unit_price' => 'double',
+    ];
+
+    /**
      * Get the order that owns the item.
      */
     public function order()

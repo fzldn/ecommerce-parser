@@ -4,32 +4,30 @@ namespace App\Http\Controllers\Api;
 
 use App\Customer;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CustomerIndexRequest;
+use App\Http\Resources\CustomerResource;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the customer.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CustomerIndexRequest $request)
     {
-        //
+        $customers = Customer::with(['shippingAddress'])
+            ->search($request->input('search'))
+            ->orderBy($request->input('sort_by', 'created_at'), $request->input('order', 'desc'))
+            ->paginate($request->input('limit', 15));
+
+        return CustomerResource::collection($customers);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created customer in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,29 +38,18 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified customer.
      *
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function show(Customer $customer)
     {
-        //
+        return new CustomerResource($customer->load(['shippingAddress']));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the specified customer in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Customer  $customer
@@ -74,7 +61,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified customer from storage.
      *
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response

@@ -18,6 +18,15 @@ class Order extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'shipping_price' => 'double',
+    ];
+
+    /**
      * Get the customer that owns the shipping address.
      */
     public function customer()

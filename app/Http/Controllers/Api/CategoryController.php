@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
-use App\Order;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class OrderController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Display a listing of the order.
+     * Display a listing of the category.
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,22 +22,25 @@ class OrderController extends Controller
             'limit' => ['filled', 'integer', 'min:0'],
             'sort_by' => ['filled', Rule::in([
                 'id',
-                'shipping_price',
+                'name',
                 'created_at'
             ])],
-            'order' => ['filled', Rule::in(['asc', 'desc'])]
+            'order' => ['filled', Rule::in(['asc', 'desc'])],
+            'search' => ['string']
         ]);
 
         $search = $request->input('search');
-        $orders = Order::with(['customer.shippingAddress', 'items', 'discounts'])
+        $categories = Category::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })
             ->orderBy($request->input('sort_by', 'created_at'), $request->input('order', 'desc'))
             ->paginate($request->input('limit', 15));
 
-        return OrderResource::collection($orders);
+        return CategoryResource::collection($categories);
     }
 
     /**
-     * Store a newly created order in storage.
+     * Store a newly created category in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -48,40 +51,35 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified order.
+     * Display the specified category.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Category $category)
     {
-        return new OrderResource($order->load([
-            'customer.shippingAddress',
-            'items.product.brand',
-            'items.product.categories',
-            'discounts'
-        ]));
+        return new CategoryResource($category);
     }
 
     /**
-     * Update the specified order in storage.
+     * Update the specified category in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Category $category)
     {
         //
     }
 
     /**
-     * Remove the specified order from storage.
+     * Remove the specified category from storage.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Category $category)
     {
         //
     }

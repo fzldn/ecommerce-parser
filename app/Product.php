@@ -25,6 +25,15 @@ class Product extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'double',
+    ];
+
+    /**
      * Get the brand that owns the product.
      */
     public function brand()
@@ -38,5 +47,28 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    /**
+     * Scope a query to search specified product.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $search
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $search)
+    {
+        if (!$search) {
+            return $query;
+        }
+
+        return $query->where(function ($q) use ($search) {
+            $likeSearch = "%{$search}%";
+            $q
+                ->where('title', 'like', $likeSearch)
+                ->orWhere('subtitle', 'like', $likeSearch)
+                ->orWhere('upc', 'like', $likeSearch)
+                ->orWhere('gtin14', 'like', $likeSearch);
+        });
     }
 }
