@@ -6,13 +6,14 @@ here's the [example file](https://s3-ap-southeast-2.amazonaws.com/catch-code-cha
 
 ## Installation
 
-After cloning this project run command below:
+After cloning this project run commands below:
 
 ```
 cd ecommerce-parser
 cp .env.example .env
 composer install
 php artisan key:generate
+php artisan migrate
 ```
 
 ### Email Configuration
@@ -61,6 +62,19 @@ MAIL_PASSWORD=your-smtp-password
 MAIL_ENCRYPTION=tls
 ```
 
+### Database Configuration
+
+Open `.env` file with your favorite editor, and edit these lines
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
 ## Parsing Input
 
 Run command help for detail
@@ -85,6 +99,12 @@ php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challe
 
 ```
 php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --email=someone@example.org
+```
+
+### Parsing Example with import to DB
+
+```
+php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --db
 ```
 
 ## Coding Standard
