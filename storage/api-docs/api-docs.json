@@ -1,0 +1,510 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "e-Commerce Parser API Documentation",
+        "version": "1.0.0"
+    },
+    "basePath": "/api",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/brands": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Display a listing of the brand.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "name",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/brands/{brandId}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Display the specified brand.",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "Brand ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Display a listing of the category.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "name",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/categories/{categoryId}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Display the specified category.",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/customers": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Display a listing of the customer.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "first_name",
+                            "last_name",
+                            "email",
+                            "phone",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/customers/{customerId}": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Display the specified customer.",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Display a listing of the order.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "shipping_price",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/orders/{orderId}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Display the specified order.",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Display a listing of the product.",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "title",
+                            "subtitle",
+                            "image",
+                            "thumbnail",
+                            "url",
+                            "upc",
+                            "gtin14",
+                            "price",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/products/brands/{brandId}": {
+            "get": {
+                "tags": [
+                    "Product",
+                    "Brand"
+                ],
+                "summary": "Display a listing of the product by brand.",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "Brand ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "title",
+                            "subtitle",
+                            "image",
+                            "thumbnail",
+                            "url",
+                            "upc",
+                            "gtin14",
+                            "price",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/products/categories/{categoryId}": {
+            "get": {
+                "tags": [
+                    "Product",
+                    "Category"
+                ],
+                "summary": "Display a listing of the product by category.",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/page_in_query"
+                    },
+                    {
+                        "$ref": "#/parameters/limit_in_query"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by",
+                        "type": "string",
+                        "default": "created_at",
+                        "enum": [
+                            "id",
+                            "title",
+                            "subtitle",
+                            "image",
+                            "thumbnail",
+                            "url",
+                            "upc",
+                            "gtin14",
+                            "price",
+                            "created_at"
+                        ]
+                    },
+                    {
+                        "$ref": "#/parameters/order_in_query"
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        },
+        "/products/{productId}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Display the specified product.",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Brand ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {},
+    "parameters": {
+        "param_in_path_required": {
+            "name": "param",
+            "in": "path",
+            "description": "Param",
+            "required": true,
+            "type": "string"
+        },
+        "page_in_query": {
+            "name": "page",
+            "in": "query",
+            "description": "Current page",
+            "type": "integer",
+            "default": 1
+        },
+        "limit_in_query": {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page",
+            "type": "integer",
+            "default": 15
+        },
+        "sort_by_in_query": {
+            "name": "sort_by",
+            "in": "query",
+            "description": "Sort by",
+            "type": "string"
+        },
+        "order_in_query": {
+            "name": "order",
+            "in": "query",
+            "description": "Sort ordering",
+            "type": "string",
+            "default": "desc",
+            "enum": [
+                "asc",
+                "desc"
+            ]
+        }
+    },
+    "tags": [
+        {
+            "name": "Brand",
+            "description": "Product Brands"
+        },
+        {
+            "name": "Category",
+            "description": "Product Categories"
+        },
+        {
+            "name": "Product",
+            "description": "Products"
+        },
+        {
+            "name": "Customer",
+            "description": "Customers"
+        }
+    ]
+}

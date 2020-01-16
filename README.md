@@ -107,6 +107,16 @@ php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challe
 php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --db
 ```
 
+## API Documentation
+
+To turn on API server run command below
+
+```
+php artisan serve
+```
+
+To see API Documentation you can see on this link [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
+
 ## Coding Standard
 
 This project using PSR-2 coding standard.

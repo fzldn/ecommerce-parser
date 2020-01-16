@@ -14,6 +14,26 @@ class CustomerController extends Controller
     /**
      * Display a listing of the customer.
      *
+     * @SWG\Get(
+     *  path="/customers",
+     *  tags={"Customer"},
+     *  @SWG\Parameter(ref="#/parameters/page_in_query"),
+     *  @SWG\Parameter(ref="#/parameters/limit_in_query"),
+     *  @SWG\Parameter(
+     *      ref="$/parameters/sort_by_in_query",
+     *      enum={"id","first_name","last_name","email","phone","created_at"},
+     *      default="created_at"
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/order_in_query"),
+     *  @SWG\Parameter(
+     *      name="search",
+     *      in="query",
+     *      description="Search",
+     *      type="string"
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(CustomerIndexRequest $request)
@@ -39,6 +59,17 @@ class CustomerController extends Controller
 
     /**
      * Display the specified customer.
+     *
+     * @SWG\Get(
+     *  path="/customers/{customerId}",
+     *  tags={"Customer"},
+     *  @SWG\Parameter(
+     *      ref="$/parameters/param_in_path_required",
+     *      name="customerId",
+     *      description="Customer ID",
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response

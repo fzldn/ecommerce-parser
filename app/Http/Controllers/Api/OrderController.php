@@ -13,6 +13,20 @@ class OrderController extends Controller
     /**
      * Display a listing of the order.
      *
+     * @SWG\Get(
+     *  path="/orders",
+     *  tags={"Order"},
+     *  @SWG\Parameter(ref="#/parameters/page_in_query"),
+     *  @SWG\Parameter(ref="#/parameters/limit_in_query"),
+     *  @SWG\Parameter(
+     *      ref="$/parameters/sort_by_in_query",
+     *      enum={"id","shipping_price","created_at"},
+     *      default="created_at"
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/order_in_query"),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -28,7 +42,6 @@ class OrderController extends Controller
             'order' => ['filled', Rule::in(['asc', 'desc'])]
         ]);
 
-        $search = $request->input('search');
         $orders = Order::with(['customer.shippingAddress', 'items', 'discounts'])
             ->orderBy($request->input('sort_by', 'created_at'), $request->input('order', 'desc'))
             ->paginate($request->input('limit', 15));
@@ -49,6 +62,17 @@ class OrderController extends Controller
 
     /**
      * Display the specified order.
+     *
+     * @SWG\Get(
+     *  path="/orders/{orderId}",
+     *  tags={"Order"},
+     *  @SWG\Parameter(
+     *      ref="$/parameters/param_in_path_required",
+     *      name="orderId",
+     *      description="Order ID",
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response

@@ -13,6 +13,27 @@ class BrandController extends Controller
     /**
      * Display a listing of the brand.
      *
+     * @SWG\Get(
+     *  path="/brands",
+     *  tags={"Brand"},
+     *  @SWG\Parameter(ref="#/parameters/page_in_query"),
+     *  @SWG\Parameter(ref="#/parameters/limit_in_query"),
+     *  @SWG\Parameter(
+     *      ref="$/parameters/sort_by_in_query",
+     *      enum={"id","name","created_at"},
+     *      default="created_at"
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/order_in_query"),
+     *  @SWG\Parameter(
+     *      name="search",
+     *      in="query",
+     *      description="Search",
+     *      type="string"
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -52,6 +73,17 @@ class BrandController extends Controller
 
     /**
      * Display the specified brand.
+     *
+     * @SWG\Get(
+     *  path="/brands/{brandId}",
+     *  tags={"Brand"},
+     *  @SWG\Parameter(
+     *      ref="$/parameters/param_in_path_required",
+     *      name="brandId",
+     *      description="Brand ID",
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response

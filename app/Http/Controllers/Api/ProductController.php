@@ -9,12 +9,31 @@ use App\Http\Requests\Api\ProductIndexRequest;
 use App\Http\Resources\ProductResource;
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the product.
+     *
+     * @SWG\Get(
+     *  path="/products",
+     *  tags={"Product"},
+     *  @SWG\Parameter(ref="#/parameters/page_in_query"),
+     *  @SWG\Parameter(ref="#/parameters/limit_in_query"),
+     *  @SWG\Parameter(
+     *      ref="$/parameters/sort_by_in_query",
+     *      enum={"id","title","subtitle","image","thumbnail","url","upc","gtin14","price","created_at"},
+     *      default="created_at"
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/order_in_query"),
+     *  @SWG\Parameter(
+     *      name="search",
+     *      in="query",
+     *      description="Search",
+     *      type="string"
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,6 +49,31 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the product by brand.
+     *
+     * @SWG\Get(
+     *  path="/products/brands/{brandId}",
+     *  tags={"Product","Brand"},
+     *  @SWG\Parameter(
+     *      ref="$/parameters/param_in_path_required",
+     *      name="brandId",
+     *      description="Brand ID",
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/page_in_query"),
+     *  @SWG\Parameter(ref="#/parameters/limit_in_query"),
+     *  @SWG\Parameter(
+     *      ref="$/parameters/sort_by_in_query",
+     *      enum={"id","title","subtitle","image","thumbnail","url","upc","gtin14","price","created_at"},
+     *      default="created_at"
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/order_in_query"),
+     *  @SWG\Parameter(
+     *      name="search",
+     *      in="query",
+     *      description="Search",
+     *      type="string"
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -49,6 +93,31 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the product by category.
+     *
+     * @SWG\Get(
+     *  path="/products/categories/{categoryId}",
+     *  tags={"Product","Category"},
+     *  @SWG\Parameter(
+     *      ref="$/parameters/param_in_path_required",
+     *      name="categoryId",
+     *      description="Category ID",
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/page_in_query"),
+     *  @SWG\Parameter(ref="#/parameters/limit_in_query"),
+     *  @SWG\Parameter(
+     *      ref="$/parameters/sort_by_in_query",
+     *      enum={"id","title","subtitle","image","thumbnail","url","upc","gtin14","price","created_at"},
+     *      default="created_at"
+     *  ),
+     *  @SWG\Parameter(ref="#/parameters/order_in_query"),
+     *  @SWG\Parameter(
+     *      name="search",
+     *      in="query",
+     *      description="Search",
+     *      type="string"
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -79,6 +148,17 @@ class ProductController extends Controller
 
     /**
      * Display the specified product.
+     *
+     * @SWG\Get(
+     *  path="/products/{productId}",
+     *  tags={"Product"},
+     *  @SWG\Parameter(
+     *      ref="$/parameters/param_in_path_required",
+     *      name="productId",
+     *      description="Brand ID",
+     *  ),
+     *  @SWG\Response(response=200, description="Success response"),
+     * )
      *
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
