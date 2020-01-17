@@ -1,78 +1,132 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# e-Commerce Parser
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+jsonlines `.jsonl` file e-commerce order data parser using Laravel framework.
 
-## About Laravel
+here's the [example file](https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+You need to install [Docker](https://www.docker.com/get-docker) on your local machine before running this app. after docker installed on your local machine, run command below
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+cd ecommerce-parser
+docker-compose up -d
+```
 
-## Learning Laravel
+after Docker container running, run these commands below
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+docker-compose exec app cp .env.example .env
+docker-compose exec app composer install
+docker-compose exec app php artisan migrate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+voila, your app ready to use...
 
-## Laravel Sponsors
+To see API Documentation you can see on this link [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation), before you playing around with API Documentation you have to run parser first with `--db` option to import parsed order data into database. see [How to running parser](#running-parser) for the detail.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Then to see Database Admin (phpMyAdmin) you can see on this link [http://localhost:8080](http://localhost:8080)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+### Email Configuration
 
-## Contributing
+Open `.env` file with your favorite editor, and edit these lines
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=admin@example.org
+MAIL_FROM_NAME="${APP_NAME}"
 
-## Code of Conduct
+MAILGUN_DOMAIN=
+MAILGUN_SECRET=
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+mailgun driver example
 
-## Security Vulnerabilities
+```
+MAIL_DRIVER=mailgun
+...
+MAILGUN_DOMAIN=your-mailgun-domain
+MAILGUN_SECRET=your-mailgun-key
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+smtp driver with [mailcatcher](https://mailcatcher.me) example
 
-## License
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=host.docker.internal
+MAIL_PORT=1025
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+or you can use your own smtp configuration
+
+```
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=465
+MAIL_USERNAME=your-smtp-username
+MAIL_PASSWORD=your-smtp-password
+MAIL_ENCRYPTION=tls
+```
+
+## Running Parser
+
+Run command help for detail
+
+```
+docker-compose exec app php artisan parser:run --help
+```
+
+### Parsing Example
+
+```
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl
+```
+
+### Parsing Example with specific output format
+
+```
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --format=jsonl
+```
+
+### Parsing Example with send to email the output data
+
+```
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --email=someone@example.org
+```
+
+### Parsing Example with import to DB
+
+```
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --db
+```
+
+## Coding Standard
+
+This project using PSR-2 coding standard.
+
+### Code Linting
+
+Run command below for code linting following coding standard.
+
+```
+docker-compose exec app vendor/bin/phpcs
+```
+
+### Code Standard Fixer
+
+Run command below for fixing your coding standard automatically.
+
+```
+docker-compose exec app vendor/bin/phpcbf
+```
+
+if some files can't go auto fix, you have to fix manually.
+
+## Creator
+
+- [Faizal Dwi Nugraha](mailto:f4154lt@yahoo.co.id)
