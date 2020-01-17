@@ -6,15 +6,26 @@ here's the [example file](https://s3-ap-southeast-2.amazonaws.com/catch-code-cha
 
 ## Installation
 
-After cloning this project run commands below:
+You need to install [Docker](https://www.docker.com/get-docker) on your local machine before running this app. after docker installed on your local machine, run command below
 
 ```
 cd ecommerce-parser
-cp .env.example .env
-composer install
-php artisan key:generate
-php artisan migrate
+docker-compose up -d
 ```
+
+after Docker container running, run these commands below
+
+```
+docker-compose exec app cp .env.example .env
+docker-compose exec app composer install
+docker-compose exec app php artisan migrate
+```
+
+voila, your app ready to use...
+
+To see API Documentation you can see on this link [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation), before you playing around with API Documentation you have to run parser first with `--db` option to import parsed order data into database. see [How to running parser](#running-parser) for the detail.
+
+Then to see Database Admin (phpMyAdmin) you can see on this link [http://localhost:8080](http://localhost:8080)
 
 ### Email Configuration
 
@@ -47,11 +58,11 @@ smtp driver with [mailcatcher](https://mailcatcher.me) example
 
 ```
 MAIL_DRIVER=smtp
-MAIL_HOST=127.0.0.1
+MAIL_HOST=host.docker.internal
 MAIL_PORT=1025
 ```
 
-or you can to use your own smtp configuration
+or you can use your own smtp configuration
 
 ```
 MAIL_DRIVER=smtp
@@ -62,60 +73,37 @@ MAIL_PASSWORD=your-smtp-password
 MAIL_ENCRYPTION=tls
 ```
 
-### Database Configuration
-
-Open `.env` file with your favorite editor, and edit these lines
-
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-## Parsing Input
+## Running Parser
 
 Run command help for detail
 
 ```
-php artisan parser:run --help
+docker-compose exec app php artisan parser:run --help
 ```
 
 ### Parsing Example
 
 ```
-php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl
 ```
 
 ### Parsing Example with specific output format
 
 ```
-php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --format=jsonl
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --format=jsonl
 ```
 
 ### Parsing Example with send to email the output data
 
 ```
-php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --email=someone@example.org
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --email=someone@example.org
 ```
 
 ### Parsing Example with import to DB
 
 ```
-php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --db
+docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --db
 ```
-
-## API Documentation
-
-To turn on API server run command below
-
-```
-php artisan serve
-```
-
-To see API Documentation you can see on this link [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
 
 ## Coding Standard
 
@@ -126,7 +114,7 @@ This project using PSR-2 coding standard.
 Run command below for code linting following coding standard.
 
 ```
-vendor/bin/phpcs
+docker-compose exec app vendor/bin/phpcs
 ```
 
 ### Code Standard Fixer
@@ -134,7 +122,7 @@ vendor/bin/phpcs
 Run command below for fixing your coding standard automatically.
 
 ```
-vendor/bin/phpcbf
+docker-compose exec app vendor/bin/phpcbf
 ```
 
 if some files can't go auto fix, you have to fix manually.

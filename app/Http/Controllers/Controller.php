@@ -21,6 +21,7 @@ class Controller extends BaseController
      * @SWG\Tag(name="Category", description="Product Categories")
      * @SWG\Tag(name="Product", description="Products")
      * @SWG\Tag(name="Customer", description="Customers")
+     * @SWG\Tag(name="Order", description="Orders")
      *
      * @SWG\Parameter(
      *  parameter="param_in_path_required",

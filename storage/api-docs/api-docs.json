@@ -505,6 +505,10 @@
         {
             "name": "Customer",
             "description": "Customers"
+        },
+        {
+            "name": "Order",
+            "description": "Orders"
         }
     ]
 }
