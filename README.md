@@ -90,19 +90,19 @@ docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazona
 ### Parsing Example with specific output format
 
 ```
-docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --format=jsonl
+docker-compose exec app php artisan parser:run --format=jsonl https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl
 ```
 
 ### Parsing Example with send to email the output data
 
 ```
-docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --email=someone@example.org
+docker-compose exec app php artisan parser:run --email=someone@example.org https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl
 ```
 
 ### Parsing Example with import to DB
 
 ```
-docker-compose exec app php artisan parser:run https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl --db
+docker-compose exec app php artisan parser:run --db https://s3-ap-southeast-2.amazonaws.com/catch-code-challenge/challenge-1-in.jsonl
 ```
 
 ## Coding Standard
